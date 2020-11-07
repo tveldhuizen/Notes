@@ -1,11 +1,15 @@
 # Hello World
 centos 8
-install:
+
+install docker and kubernetes:
 ```console
+[tveld@localhost ~]$ sudo swapoff -a
 [tveld@localhost ~]$ sudo yum remove buildah skopeo podman
 [tveld@localhost ~]$ sudo yum install -y yum-utils
 [tveld@localhost ~]$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 [tveld@localhost ~]$ sudo yum install docker-ce docker-ce-cli containerd.io
+[tveld@localhost ~]$ sudo systemctl start docker
+[tveld@localhost ~]$ sudo systemctl enable docker
 [tveld@localhost ~]$ cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -20,4 +24,5 @@ EOF
 [tveld@localhost ~]$ sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 [tveld@localhost ~]$ sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 [tveld@localhost ~]$ sudo systemctl enable --now kubelet
+
 ```
